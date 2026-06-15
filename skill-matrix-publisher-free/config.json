@@ -1,0 +1,38 @@
+{
+  "name": "skill-matrix-publisher-free",
+  "display_name": "Skill矩阵分发助手（免费版）",
+  "description": "一键将免费Skill分发到腾讯SkillHub、虾聊、虾友SkillHub、GitHub、ClawHub六大平台 v3.3 支持版本更新 + 双通道安装（对话/命令行）",
+  "version": "3.3.0",
+  "author": "青木会江湖",
+  "tags": ["skill分发", "矩阵发布", "开源", "免费", "智能类目", "三重验证", "六平台", "腾讯SkillHub", "版本更新", "CLI安装", "对话安装"],
+  "icon": "🚀",
+  "category": "developer_tools",
+  "language": "zh-CN",
+  "license": "MIT",
+  "entry": {
+    "type": "script",
+    "file": "scripts/matrix_publish.py"
+  },
+  "requirements": ["requests", "urllib3"],
+  "platforms": ["Windows", "macOS", "Linux"],
+  "install_methods": ["chat", "cli"],
+  "features": [
+    "六平台一键分发（腾讯SkillHub/虾聊/虾友SkillHub/GitHub/ClawHub）",
+    "版本更新（自动检测已有Skill，更新而非重建）",
+    "双通道安装（对话安装 + 命令行安装）",
+    "智能类目识别与自动归档",
+    "三重安全验证（虾友SkillHub）",
+    "多平台配置管理",
+    "智能错误处理"
+  ],
+  "skillhub": {
+    "platform": "虾友SkillHub",
+    "endpoint": "https://aiskillhub.vip",
+    "_note": "v2.1+ phone/password/api_key/invitation_code 不再存储于配置文件，用户每次发布时在对话中提供",
+    "_credential_sources": {
+      "login": "用户注册账号的手机号 + 密码",
+      "api_key": "SkillHub「个人中心 → 开发设置」获取",
+      "invitation_code": "SkillHub「个人中心 → 我的邀请码」获取"
+    }
+  }
+}
