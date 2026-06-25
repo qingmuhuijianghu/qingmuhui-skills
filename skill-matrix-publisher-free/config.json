@@ -1,38 +1,52 @@
 {
   "name": "skill-matrix-publisher-free",
   "display_name": "Skill矩阵分发助手（免费版）",
-  "description": "一键将免费Skill分发到腾讯SkillHub、虾聊、虾友SkillHub、GitHub、ClawHub六大平台 v3.3 支持版本更新 + 双通道安装（对话/命令行）",
-  "version": "3.3.0",
+  "version": "3.7.14",
   "author": "青木会江湖",
-  "tags": ["skill分发", "矩阵发布", "开源", "免费", "智能类目", "三重验证", "六平台", "腾讯SkillHub", "版本更新", "CLI安装", "对话安装"],
+  "tags": [
+    "skill分发",
+    "矩阵发布",
+    "开源",
+    "免费",
+    "六平台",
+    "腾讯SkillHub",
+    "虾友SkillHub",
+    "ClawHub",
+    "GitHub",
+    "虾聊"
+  ],
   "icon": "🚀",
   "category": "developer_tools",
   "language": "zh-CN",
   "license": "MIT",
-  "entry": {
-    "type": "script",
-    "file": "scripts/matrix_publish.py"
-  },
-  "requirements": ["requests", "urllib3"],
-  "platforms": ["Windows", "macOS", "Linux"],
-  "install_methods": ["chat", "cli"],
-  "features": [
-    "六平台一键分发（腾讯SkillHub/虾聊/虾友SkillHub/GitHub/ClawHub）",
-    "版本更新（自动检测已有Skill，更新而非重建）",
-    "双通道安装（对话安装 + 命令行安装）",
-    "智能类目识别与自动归档",
-    "三重安全验证（虾友SkillHub）",
-    "多平台配置管理",
-    "智能错误处理"
-  ],
+  "_security_notice": "🔴 本配置文件仅含占位符。使用前请用你的真实凭据替换所有 '请填写你的XXX' 字段。",
   "skillhub": {
     "platform": "虾友SkillHub",
     "endpoint": "https://aiskillhub.vip",
-    "_note": "v2.1+ phone/password/api_key/invitation_code 不再存储于配置文件，用户每次发布时在对话中提供",
-    "_credential_sources": {
-      "login": "用户注册账号的手机号 + 密码",
-      "api_key": "SkillHub「个人中心 → 开发设置」获取",
-      "invitation_code": "SkillHub「个人中心 → 我的邀请码」获取"
-    }
+    "invitation_code": "请填写你的邀请码（如 BETA-XXXX-XXXX）",
+    "api_key": "请填写你的API Key（sk-开头）"
+  },
+  "tencent_skillhub": {
+    "platform": "腾讯SkillHub（个人版）",
+    "endpoint": "https://api.skillhub.cn",
+    "token": "请填写你的skh_ Token"
+  },
+  "clawdchat": {
+    "platform": "虾聊",
+    "endpoint": "https://clawdchat.cn",
+    "username": "请填写你的用户名",
+    "api_key": "请填写你的clawdchat_ Key"
+  },
+  "clawhub": {
+    "platform": "ClawHub",
+    "endpoint": "https://clawhub.ai",
+    "token": "请填写你的clh_ Token"
+  },
+  "github": {
+    "platform": "GitHub",
+    "endpoint": "https://api.github.com",
+    "token": "请填写你的ghp_ Token",
+    "owner": "请填写你的GitHub用户名",
+    "repo": "请填写你的仓库名"
   }
 }
