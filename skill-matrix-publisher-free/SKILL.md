@@ -3,7 +3,7 @@ title: "Skill矩阵分发助手（免费版）"
 description: "一键将免费Skill分发到腾讯SkillHub（个人版+团队版）、虾聊、虾友SkillHub、GitHub、ClawHub六大平台 v3.7.0 取消手机号+密码登录，直接用邀请码+API Key做认证，后续所有API调用通过API Key完成"
 author: "青木会江湖"
 tags: ["skill分发", "矩阵发布", "开源", "免费", "智能类目", "自动归档", "六平台", "腾讯SkillHub", "团队版", "个人版", "ClawHub", "虾友SkillHub", "GitHub", "实战验证", "版本更新", "POST更新", "平台探查", "意图识别", "更新变发布防护"]
-version: "3.7.12"
+version: "3.7.15"
 ---
 
 # 🚀 Skill矩阵分发助手（免费版）
@@ -1034,6 +1034,9 @@ description: 完整描述      # 详细描述
 > ⚠️ 注意：`version` 字段是 ClawHub 强制要求，缺失会被拒绝。
 
 **Step 3: API 一键发布**
+
+> ⚠️ **ClawHub multipart 字段名铁律（踩坑验证）**：multipart form 中 JSON 数据的字段名必须是 **`"payload"`**，绝不能写成 `"metadata"`！`"metadata"` 是其他平台的习惯写法，但在 ClawHub 会导致数据不被识别。以下代码中的 `files={"payload": ...}` 是正确的，切勿修改！
+
 ```python
 import requests, json
 
@@ -1050,7 +1053,7 @@ resp = requests.post(
     "https://clawhub.ai/api/v1/skills",
     headers={"Authorization": "Bearer clh_你的Token"},
     files={
-        "payload": (None, payload, "application/json"),
+        "payload": (None, payload, "application/json"),     # ⚠️ 必须是 "payload"，不能是 "metadata"！
         "files": ("SKILL.md", skill_content.encode("utf-8"), "text/markdown"),
     }
 )
@@ -1073,6 +1076,7 @@ resp = requests.post(
 | 400 acceptLicenseTerms | 未同意开发者协议 | 访问 clawhub.ai → Settings → Developer Settings → 同意协议 |
 | 409 版本冲突 | 版本号已存在 | 升级版本号如 1.0.0 → 1.0.1 |
 | 422 (tags) | tags 包含中文 | ClawHub 后端 Convex 字段名只接受 ASCII，必须用英文 tag（如 `community` 替代 `社群`）|
+| 数据不识别/字段丢失 | multipart JSON 字段名用了 `metadata` | ClawHub multipart form 中 JSON 字段名必须是 **`"payload"`**，不能是 `"metadata"`（已踩坑验证）|
 | 安全扫描不通过 | 硬编码凭证/未声明环境变量 | 改用环境变量 + 声明 metadata |
 
 ---
@@ -1292,7 +1296,7 @@ Step 3：执行
 - **官方网站**：https://qingmuhui.com
 - **虾友SkillHub**：https://aiskillhub.vip
 - **腾讯SkillHub**：https://skillhub.cn
-- **版本**：v3.7.12
+- **版本**：v3.7.15
 
 ---
 
@@ -1302,9 +1306,10 @@ Step 3：执行
 
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| **v3.7.15** | 2026-06-25 | 🐛 **补ClawHub multipart规则**：明确 multipart form 中 JSON 字段名必须用 `"payload"` 不能用 `"metadata"`，补入常见错误表 + 代码注释，避免后人踩坑 |
+| **v3.7.14** | 2026-06-25 | 🐛 **修复changelog中文乱码**：Windows下curl发送中文被GBK编码导致乱码，改用Python requests（UTF-8），清理2条历史乱码记录；补充DELETE /versions实际可用 |
+| **v3.7.13** | 2026-06-25 | 🔴 **重大安全修复**：清空 config.json 中所有硬编码的开发者凭据（API Key/Token/邀请码/密码），全部替换为占位符；修正 SKILL.md 凭据表格为待填写状态 |
 | **v3.7.12** | 2026-06-23 | 📦 **SKILL.md瘦身**：changelog历史记录拆分到独立 CHANGELOG.md，SKILL.md仅保留最近3个版本，解决虾友SkillHub数据库description字段溢出问题（67KB→~48KB） |
-| **v3.7.11** | 2026-06-23 | 🔴 **新增「操作前强制平台探查」规则**：最高优先级，任何平台任何操作前必须先走四步流程（平台探查→结果展示→用户确认→执行），杜绝「更新变发布」事故 |
-| **v3.7.10** | 2026-06-23 | 🐛 **修正虾友SkillHub更新API**：实测发现 PATCH /api/skills/{id} 是假动作（返回200但不更新version字段），全部改为 POST /api/skills/{id}（返回201、真正更新数据） |
 
 ---
 
